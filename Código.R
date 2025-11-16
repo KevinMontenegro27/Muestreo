@@ -12,11 +12,12 @@ library(labelled)
 
 
 # Declaración del modelo 
-disenyo <- svydesign(ids=~1, data=act2023, weights = ~factor)
+disenyo <- svydesign(ids=~1, data=act, weights = ~factor)
 class(disenyo)
 #Tablas ----
 
 
 
 #Gráficos ----
+
 
