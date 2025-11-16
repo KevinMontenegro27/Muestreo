@@ -99,9 +99,46 @@ disenyo <- svydesign(ids=~1, data=act, weights = ~factor)
 class(disenyo)
 
 #Tablas ----
-
+#Tablas Geográficas----
+###Tabla sobre Educación por edad, dividida por sexo----
 tabla1 <- svytable(~edu+edad+SD2, disenyo); tabla1
 tabla1 <- as.data.frame(tabla1); tabla1
+###Tabla sobre estado conyugal por edad, dividida por sexo----
+tabla2<- svytable(~CS8+edad+SD2, disenyo); tabla2
+tablas2<- as.data.frame(tabla2)
+#Revisar si quieren alguna otra -
+
+
+#Tablas sobre acoso sexual callejero----
+###Tabla sobre Chiflado por edad, divido por sexo----. 
+tabla3 <- svytable(~AS1_1+edad+SD2, disenyo); tabla3
+tablas3<- as.data.frame(tabla3)
+###Tabla sobre Piropos por edad, divido por sexo----. 
+tabla4 <- svytable(~AS2_1+edad+SD2, disenyo); tabla4
+tablas4<- as.data.frame(tabla4)
+###Tabla sobre Pitado por edad, divido por sexo----. 
+tabla5 <- svytable(~AS3_1+edad+SD2, disenyo); tabla5
+tablas5<- as.data.frame(tabla5)
+###Tabla sobre Mostrado genitales sin desearlo por edad, divido por sexo----. 
+tabla6 <- svytable(~AS4_1+edad+SD2, disenyo); tabla6
+tablas6<- as.data.frame(tabla6)
+
+#Tablas sobre acoso sexual digital ----
+###Tabla sobre mensajes por edad, divido por sexo----. 
+tabla7 <- svytable(~AS5_1+edad+SD2, disenyo); tabla7
+tablas7<- as.data.frame(tabla7)
+###Tabla sobre comentarios de tipo sexual por edad, divido por sexo----. 
+tabla8 <- svytable(~AS6_1+edad+SD2, disenyo); tabla8
+tablas8<- as.data.frame(tabla8)
+###Tabla sobre publicar información por edad, divido por sexo----. 
+tabla9 <- svytable(~AS7_1+edad+SD2, disenyo); tabla9
+tablas9<- as.data.frame(tabla9)
+###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
+tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
+tablas10<- as.data.frame(tabla10)
+
+#FALTA LA TABLA DE FRECUENCIA SI HA SIDO HOMBRE O MUJER 
 
 
 #Gráficos ----
+
