@@ -1,17 +1,16 @@
 # Datos ----      
 load("act24_al_13nov.RData")
-
-
-##Nueva variable---- 
-act$factor= rep(1, 937)
-
 #Librerías ----
 library(dplyr)
 library(survey)
 library(labelled)
 
-#Imputación 
-#revisar perdidos en sexo 
+
+##Nueva variable---- 
+act$factor= rep(1, 937)
+
+# Recodificación I ---- 
+#### Sexo ----
 act %>% tabyl(CS1) #no hay perdidos
 act <- act %>% mutate(CS1= case_when(CS1=="HOMBRE"~ "Hombre", 
                                      CS1== "MUJER" ~ "Mujer", 
@@ -19,13 +18,13 @@ act <- act %>% mutate(CS1= case_when(CS1=="HOMBRE"~ "Hombre",
 #las etiquetas tienen que coincidir con la tabla de la ENAHO
 sum(is.na(act$CS1))
 
-#Recodificación por edad 
+### Edad ---- 
 act %>% tabyl(CS2)
 act <- act %>% mutate(CS2= case_when(CS2== 99 ~ NA, .default=CS2))
-sum(is.na(act$CS2)) #no hay perdidos
+sum(is.na(act$CS2))
 
 
-#Educación 
+###Educación---- 
 act <- act %>% mutate(edu= case_when(
   CS3== "NINGUNO" ~ 1,
   CS3== "PRIMARIA – PRIMER GRADO" ~ 1,
@@ -51,11 +50,11 @@ act <- act %>% mutate(edu= case_when(
 act <- act %>% mutate(edu=factor(edu, levels=c(1,2,3), labels = c("primaria", "secundaria", "universitaria")))
 act %>% tabyl(edu)
 
-#Estado conyugal 
+###Estado conyugal ---- 
 levels(act$CS8)=c("Soltero", "Unión Libre", "Casado/a", "Separado/a", "Divorciado/a", "Viudo/a", "NA")
 
-
-#Edad
+# Recodificación II---- 
+### Edad----
 act %>% tabyl(CS2) 
 act <- act %>% mutate(CS2= as.numeric(as.character(CS2))) %>%
   mutate(edad= case_when(
@@ -67,7 +66,7 @@ act <- act %>% mutate(edad=factor(edad, labels = c("18a34", "35a49", "50+")))
 act %>% tabyl(edad)
 
 
-#sexo
+### Sexo----
 set.seed(13112025) #usar la fecha del dia que se corrio 
 tabyl(act$CS1)
 aleatorios.sexo <- runif(9,0,1) #numeros de valores a imputar
@@ -76,7 +75,7 @@ act <- act %>% mutate(SD2=CS1)
 act$SD2[is.na(act$SD2)==T] <- aleatorios.sexo.cat
 act %>% tabyl(SD2)
 
-#educacion 
+### Educacion ---- 
 set.seed(13112025)
 aleatorios.edu <- runif(5,0,1)
 tabyl(act$edu)
@@ -86,7 +85,8 @@ act$edu[is.na(act$edu)==T] <- act.edu.cat
 act %>% tabyl(edu)
 
 
-#edad
+#Imputación----
+# Edad
 set.seed(13112025)
 aleatorios.edad <- runif(16,0,1)
 act.edad.cat <- ifelse(aleatorios.edad <= 0.3517915, "18a34", 
@@ -94,17 +94,14 @@ act.edad.cat <- ifelse(aleatorios.edad <= 0.3517915, "18a34",
 act$edad[is.na(act$edad)==T] <- act.edad.cat
 tabyl(act$edad)
 
-
-# Declaración del modelo 
+#Declaración del diseño---- 
 disenyo <- svydesign(ids=~1, data=act, weights = ~factor)
 class(disenyo)
+
 #Tablas ----
+
 tabla1 <- svytable(~edu+edad+SD2, disenyo); tabla1
 tabla1 <- as.data.frame(tabla1); tabla1
 
 
 #Gráficos ----
-
-
-
-
