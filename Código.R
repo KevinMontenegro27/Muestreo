@@ -139,6 +139,11 @@ tablas9<- as.data.frame(tabla9)
 ###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
 tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
 tablas10<- as.data.frame(tabla10)
+
+
+
+
+
 #Tablas por provincia dado el tipo de acoso---- 
 ###Tabla sobre Chiflados, por provincia dado sexo---- 
 tabla12 <- svytable(~CS13_A+SD2+AS1_1, disenyo); tabla12
@@ -157,6 +162,7 @@ tablas15<- as.data.frame(tabla15)
 
 
 #Gráficos ----
+
 
 
 
