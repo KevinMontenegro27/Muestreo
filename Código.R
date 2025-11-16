@@ -113,6 +113,11 @@ tablas11<- as.data.frame(tabla11)
 
 
 #Tablas sobre acoso sexual callejero----
+###Tabla sobre Chiflado por edad, divido por sexo----. 
+tabla3 <- svytable(~AS1_1+edad+SD2, disenyo); tabla3
+tablas3<- as.data.frame(tabla3)
+prop_tabla3 <- prop.table(tabla3, margin = c(2, 3))
+prop_tabla3
 ###Tabla sobre Piropos por edad, divido por sexo----. 
 tabla4 <- svytable(~AS2_1+edad+SD2, disenyo); tabla4
 tablas4<- as.data.frame(tabla4)
@@ -173,6 +178,7 @@ tablas15<- as.data.frame(tabla15)
 
 
 #Gráficos ----
+
 
 
 
