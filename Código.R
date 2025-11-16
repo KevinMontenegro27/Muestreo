@@ -5,15 +5,18 @@ load("act24_al_13nov.RData")
 ##Nueva variable---- 
 act$factor= rep(1, 937)
 
-#LibrerÌas ----
+#Librer√≠as ----
 library(dplyr)
 library(survey)
 library(labelled)
 
 
-
+# Declaraci√≥n del modelo 
+disenyo <- svydesign(ids=~1, data=act2023, weights = ~factor)
+class(disenyo)
 #Tablas ----
 
 
 
-#Gr·ficos ----
+#Gr√°ficos ----
+
