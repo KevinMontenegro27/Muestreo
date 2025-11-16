@@ -113,18 +113,21 @@ tablas11<- as.data.frame(tabla11)
 
 
 #Tablas sobre acoso sexual callejero----
-###Tabla sobre Chiflado por edad, divido por sexo----. 
-tabla3 <- svytable(~AS1_1+edad+SD2, disenyo); tabla3
-tablas3<- as.data.frame(tabla3)
 ###Tabla sobre Piropos por edad, divido por sexo----. 
 tabla4 <- svytable(~AS2_1+edad+SD2, disenyo); tabla4
 tablas4<- as.data.frame(tabla4)
+prop_tabla4 <- prop.table(tabla4, margin = c(2, 3))
+prop_tabla4
 ###Tabla sobre Pitado por edad, divido por sexo----. 
 tabla5 <- svytable(~AS3_1+edad+SD2, disenyo); tabla5
 tablas5<- as.data.frame(tabla5)
+prop_tabla5 <- prop.table(tabla5, margin = c(2, 3))
+prop_tabla5
 ###Tabla sobre Mostrado genitales sin desearlo por edad, divido por sexo----. 
 tabla6 <- svytable(~AS4_1+edad+SD2, disenyo); tabla6
 tablas6<- as.data.frame(tabla6)
+prop_tabla6 <- prop.table(tabla6, margin = c(2, 3))
+prop_tabla6
 
 #Tablas sobre acoso sexual digital ----
 ###Tabla sobre mensajes por edad, divido por sexo----. 
@@ -162,6 +165,7 @@ tablas15<- as.data.frame(tabla15)
 
 
 #Gráficos ----
+
 
 
 
