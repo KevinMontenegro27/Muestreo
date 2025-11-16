@@ -107,7 +107,9 @@ tabla1 <- as.data.frame(tabla1); tabla1
 ###Tabla sobre estado conyugal por edad, dividida por sexo----
 tabla2<- svytable(~CS8+edad+SD2, disenyo); tabla2
 tablas2<- as.data.frame(tabla2)
-#Revisar si quieren alguna otra -
+### Tabla sobre si tenemos internet por sexo y dividido por edad----.
+tabla11 <- svytable(~CS10+SD2+edad, disenyo); tabla11
+tablas11<- as.data.frame(tabla11)
 
 
 #Tablas sobre acoso sexual callejero----
@@ -137,14 +139,12 @@ tablas9<- as.data.frame(tabla9)
 ###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
 tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
 tablas10<- as.data.frame(tabla10)
-### Tabla sobre si tenemos internet por sexo y dividido por edad----.
-tabla11 <- svytable(~CS10+SD2+edad, disenyo); tabla11
-tablas11<- as.data.frame(tabla11)
 
 #FALTA LA TABLA DE FRECUENCIA SI HA SIDO HOMBRE O MUJER 
 
 
 #Gráficos ----
+
 
 
 
