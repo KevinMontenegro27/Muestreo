@@ -133,15 +133,23 @@ prop_tabla6
 ###Tabla sobre mensajes por edad, divido por sexo----. 
 tabla7 <- svytable(~AS5_1+edad+SD2, disenyo); tabla7
 tablas7<- as.data.frame(tabla7)
+prop_tabla7 <- prop.table(tabla7, margin = c(2, 3))
+prop_tabla7
 ###Tabla sobre comentarios de tipo sexual por edad, divido por sexo----. 
 tabla8 <- svytable(~AS6_1+edad+SD2, disenyo); tabla8
 tablas8<- as.data.frame(tabla8)
+prop_tabla8 <- prop.table(tabla8, margin = c(2, 3))
+prop_tabla8
 ###Tabla sobre publicar información por edad, divido por sexo----. 
 tabla9 <- svytable(~AS7_1+edad+SD2, disenyo); tabla9
 tablas9<- as.data.frame(tabla9)
+prop_tabla9 <- prop.table(tabla3, margin = c(2, 3))
+prop_tabla9
 ###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
 tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
 tablas10<- as.data.frame(tabla10)
+prop_tabla10 <- prop.table(tabla3, margin = c(2, 3))
+prop_tabla10
 
 
 
@@ -165,6 +173,7 @@ tablas15<- as.data.frame(tabla15)
 
 
 #Gráficos ----
+
 
 
 
