@@ -99,10 +99,12 @@ tabyl(act$edad)
 disenyo <- svydesign(ids=~1, data=act, weights = ~factor)
 class(disenyo)
 #Tablas ----
-
+tabla1 <- svytable(~edu+edad+SD2, disenyo); tabla1
+tabla1 <- as.data.frame(tabla1); tabla1
 
 
 #Gráficos ----
+
 
 
 
