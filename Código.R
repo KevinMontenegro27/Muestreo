@@ -148,6 +148,23 @@ tabla8 <- svytable(~AS6_1+edad+SD2, disenyo); tabla8
 tablas8<- as.data.frame(tabla8)
 prop_tabla8 <- prop.table(tabla8, margin = c(2, 3))
 prop_tabla8
+
+
+
+#Tablas por provincia dado el tipo de acoso---- 
+###Tabla sobre Chiflados, por provincia dado sexo---- 
+tabla12 <- svytable(~CS13_A+SD2+AS1_1, disenyo); tabla12
+tablas12<- as.data.frame(tabla12)
+###Tabla sobre Piropos, por provincia dado sexo---- 
+tabla13 <- svytable(~CS13_A+SD2+AS2_1, disenyo); tabla13
+tablas13<- as.data.frame(tabla13)
+###Tabla sobre pitado, por provincia dado sexo---- 
+tabla14 <- svytable(~CS13_A+SD2+AS3_1, disenyo); tabla14
+tablas14<- as.data.frame(tabla14)
+###Tabla sobre mostradi genitales, por provincia dado sexo---- 
+tabla15 <- svytable(~CS13_A+SD2+AS4_1, disenyo); tabla15
+tablas15<- as.data.frame(tabla15)
+
 ###Tabla de provincia dado sexo----.
 tabla17 <- svytable(~CS13_A+SD2+AS6_1, disenyo); tabla17
 tablas17<- as.data.frame(tabla17)
@@ -171,25 +188,11 @@ tablas19<- as.data.frame(tabla19)
 
 
 
-
-#Tablas por provincia dado el tipo de acoso---- 
-###Tabla sobre Chiflados, por provincia dado sexo---- 
-tabla12 <- svytable(~CS13_A+SD2+AS1_1, disenyo); tabla12
-tablas12<- as.data.frame(tabla12)
-###Tabla sobre Piropos, por provincia dado sexo---- 
-tabla13 <- svytable(~CS13_A+SD2+AS2_1, disenyo); tabla13
-tablas13<- as.data.frame(tabla13)
-###Tabla sobre pitado, por provincia dado sexo---- 
-tabla14 <- svytable(~CS13_A+SD2+AS3_1, disenyo); tabla14
-tablas14<- as.data.frame(tabla14)
-###Tabla sobre mostradi genitales, por provincia dado sexo---- 
-tabla15 <- svytable(~CS13_A+SD2+AS4_1, disenyo); tabla15
-tablas15<- as.data.frame(tabla15)
-
 #FALTA LA TABLA DE FRECUENCIA SI HA SIDO HOMBRE O MUJER 
 
 
 #Gráficos ----
+
 
 
 
