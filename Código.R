@@ -108,7 +108,7 @@ tabla1 <- as.data.frame(tabla1); tabla1
 tabla2<- svytable(~CS8+edad+SD2, disenyo); tabla2
 tablas2<- as.data.frame(tabla2)
 ### Tabla sobre si tenemos internet por sexo y dividido por edad----.
-tabla11 <- svytable(~CS10+SD2+edad, disenyo); tabla11
+tabla11 <- svytable(~CS10+edad+SD2, disenyo); tabla11
 tablas11<- as.data.frame(tabla11)
 
 
@@ -144,6 +144,7 @@ tablas10<- as.data.frame(tabla10)
 
 
 #Gráficos ----
+
 
 
 
