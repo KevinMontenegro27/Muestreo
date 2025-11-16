@@ -140,6 +140,9 @@ tabla7 <- svytable(~AS5_1+edad+SD2, disenyo); tabla7
 tablas7<- as.data.frame(tabla7)
 prop_tabla7 <- prop.table(tabla7, margin = c(2, 3))
 prop_tabla7
+###Tabla de provincia dado sexo----.
+tabla16 <- svytable(~CS13_A+SD2+AS5_1, disenyo); tabla16
+tablas16<- as.data.frame(tabla16)
 ###Tabla sobre comentarios de tipo sexual por edad, divido por sexo----. 
 tabla8 <- svytable(~AS6_1+edad+SD2, disenyo); tabla8
 tablas8<- as.data.frame(tabla8)
@@ -178,6 +181,7 @@ tablas15<- as.data.frame(tabla15)
 
 
 #Gráficos ----
+
 
 
 
