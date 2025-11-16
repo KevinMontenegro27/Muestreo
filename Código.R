@@ -148,16 +148,25 @@ tabla8 <- svytable(~AS6_1+edad+SD2, disenyo); tabla8
 tablas8<- as.data.frame(tabla8)
 prop_tabla8 <- prop.table(tabla8, margin = c(2, 3))
 prop_tabla8
+###Tabla de provincia dado sexo----.
+tabla17 <- svytable(~CS13_A+SD2+AS6_1, disenyo); tabla17
+tablas17<- as.data.frame(tabla17)
 ###Tabla sobre publicar información por edad, divido por sexo----. 
 tabla9 <- svytable(~AS7_1+edad+SD2, disenyo); tabla9
 tablas9<- as.data.frame(tabla9)
 prop_tabla9 <- prop.table(tabla3, margin = c(2, 3))
 prop_tabla9
+###Tabla de provincia dado sexo----.
+tabla18 <- svytable(~CS13_A+SD2+AS7_1, disenyo); tabla18
+tablas18<- as.data.frame(tabla18)
 ###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
 tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
 tablas10<- as.data.frame(tabla10)
 prop_tabla10 <- prop.table(tabla3, margin = c(2, 3))
 prop_tabla10
+###Tabla de provincia dado sexo----.
+tabla19 <- svytable(~CS13_A+SD2+AS8_1, disenyo); tabla19
+tablas19<- as.data.frame(tabla19)
 
 
 
@@ -181,6 +190,7 @@ tablas15<- as.data.frame(tabla15)
 
 
 #Gráficos ----
+
 
 
 
