@@ -137,10 +137,14 @@ tablas9<- as.data.frame(tabla9)
 ###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
 tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
 tablas10<- as.data.frame(tabla10)
+### Tabla sobre si tenemos internet por sexo y dividido por edad----.
+tabla11 <- svytable(~CS10+SD2+edad, disenyo); tabla11
+tablas11<- as.data.frame(tabla11)
 
 #FALTA LA TABLA DE FRECUENCIA SI HA SIDO HOMBRE O MUJER 
 
 
 #Gráficos ----
+
 
 
