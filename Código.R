@@ -4,7 +4,8 @@ load("act24_al_13nov.RData")
 library(dplyr)
 library(survey)
 library(labelled)
-
+library(janitor)
+library(haven)
 
 ##Nueva variable---- 
 act$factor= rep(1, 937)
@@ -141,4 +142,5 @@ tablas10<- as.data.frame(tabla10)
 
 
 #Gráficos ----
+
 
