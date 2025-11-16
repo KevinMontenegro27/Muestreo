@@ -52,7 +52,7 @@ act <- act %>% mutate(edu=factor(edu, levels=c(1,2,3), labels = c("primaria", "s
 act %>% tabyl(edu)
 
 ###Estado conyugal ---- 
-levels(act$CS8)=c("Soltero", "Unión Libre", "Casado/a", "Separado/a", "Divorciado/a", "Viudo/a", "NA")
+levels(act$CS8)=c("Soltero/a", "Unión Libre", "Casado/a", "Separado/a", "Divorciado/a", "Viudo/a", "NA")
 
 # Recodificación II---- 
 ### Edad----
@@ -99,17 +99,17 @@ tabyl(act$edad)
 disenyo <- svydesign(ids=~1, data=act, weights = ~factor)
 class(disenyo)
 
-#Tablas ----
 #Tablas Geográficas----
 ###Tabla sobre Educación por edad, dividida por sexo----
 tabla1 <- svytable(~edu+edad+SD2, disenyo); tabla1
-tabla1 <- as.data.frame(tabla1); tabla1
+tablas1 <- as.data.frame(tabla1); tabla1
 ###Tabla sobre estado conyugal por edad, dividida por sexo----
 tabla2<- svytable(~CS8+edad+SD2, disenyo); tabla2
 tablas2<- as.data.frame(tabla2)
 ### Tabla sobre si tenemos internet por sexo y dividido por edad----.
 tabla11 <- svytable(~CS10+edad+SD2, disenyo); tabla11
 tablas11<- as.data.frame(tabla11)
+
 
 
 #Tablas sobre acoso sexual callejero----
@@ -140,14 +140,19 @@ tabla7 <- svytable(~AS5_1+edad+SD2, disenyo); tabla7
 tablas7<- as.data.frame(tabla7)
 prop_tabla7 <- prop.table(tabla7, margin = c(2, 3))
 prop_tabla7
-###Tabla de provincia dado sexo----.
-tabla16 <- svytable(~CS13_A+SD2+AS5_1, disenyo); tabla16
-tablas16<- as.data.frame(tabla16)
 ###Tabla sobre comentarios de tipo sexual por edad, divido por sexo----. 
 tabla8 <- svytable(~AS6_1+edad+SD2, disenyo); tabla8
 tablas8<- as.data.frame(tabla8)
 prop_tabla8 <- prop.table(tabla8, margin = c(2, 3))
 prop_tabla8
+###Tabla sobre publicar información por edad, divido por sexo----. 
+tabla9 <- svytable(~AS7_1+edad+SD2, disenyo); tabla9
+tablas9<- as.data.frame(tabla9)
+###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
+tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
+tablas10<- as.data.frame(tabla10)
+prop_tabla10 <- prop.table(tabla3, margin = c(2, 3))
+prop_tabla10
 
 
 
@@ -165,43 +170,25 @@ tablas14<- as.data.frame(tabla14)
 tabla15 <- svytable(~CS13_A+SD2+AS4_1, disenyo); tabla15
 tablas15<- as.data.frame(tabla15)
 
+
+###Tabla de provincia dado sexo----.
+tabla16 <- svytable(~CS13_A+SD2+AS5_1, disenyo); tabla16
+tablas16<- as.data.frame(tabla16)
 ###Tabla de provincia dado sexo----.
 tabla17 <- svytable(~CS13_A+SD2+AS6_1, disenyo); tabla17
 tablas17<- as.data.frame(tabla17)
-###Tabla sobre publicar información por edad, divido por sexo----. 
-tabla9 <- svytable(~AS7_1+edad+SD2, disenyo); tabla9
-tablas9<- as.data.frame(tabla9)
-prop_tabla9 <- prop.table(tabla3, margin = c(2, 3))
-prop_tabla9
 ###Tabla de provincia dado sexo----.
 tabla18 <- svytable(~CS13_A+SD2+AS7_1, disenyo); tabla18
 tablas18<- as.data.frame(tabla18)
-###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
-tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
-tablas10<- as.data.frame(tabla10)
-prop_tabla10 <- prop.table(tabla3, margin = c(2, 3))
-prop_tabla10
 ###Tabla de provincia dado sexo----.
 tabla19 <- svytable(~CS13_A+SD2+AS8_1, disenyo); tabla19
 tablas19<- as.data.frame(tabla19)
 
 
+#Frecuencia del sexo que lo realiza----
 
 
-#FALTA LA TABLA DE FRECUENCIA SI HA SIDO HOMBRE O MUJER 
 
 
 #Gráficos ----
-
-
-
-
-
-
-
-
-
-
-
-
 
