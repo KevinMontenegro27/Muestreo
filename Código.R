@@ -165,10 +165,12 @@ prop_tabla8
 ###Tabla sobre publicar información por edad, divido por sexo----. 
 tabla9 <- svytable(~AS7_1+edad+SD2, disenyo); tabla9
 tablas9<- as.data.frame(tabla9)
+prop_tabla9 <- prop.table(tabla9, margin = c(2, 3))
+prop_tabla9
 ###Tabla sobre enviado fotos y videos manipulados sin desearlo por edad, divido por sexo----. 
 tabla10 <- svytable(~AS8_1+edad+SD2, disenyo); tabla10
 tablas10<- as.data.frame(tabla10)
-prop_tabla10 <- prop.table(tabla3, margin = c(2, 3))
+prop_tabla10 <- prop.table(tabla10, margin = c(2, 3))
 prop_tabla10
 
 
@@ -526,6 +528,7 @@ ggplot(df_radar_largo, aes(x = Etiqueta, y = Proporcion_Si, group = Grupo)) +
     panel.grid.minor = element_blank(),
     legend.position = "bottom"
   )
+
 
 
 
