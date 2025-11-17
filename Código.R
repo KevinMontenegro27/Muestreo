@@ -514,3 +514,4 @@ ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
 
 
 
+
