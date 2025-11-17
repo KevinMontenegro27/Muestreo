@@ -6,6 +6,8 @@ library(survey)
 library(labelled)
 library(janitor)
 library(haven)
+library(tidyr)
+library(ggplot2)
 
 ##Nueva variable---- 
 act$factor= rep(1, 937)
@@ -355,6 +357,64 @@ ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS4_1)) +
   ) +
   theme_minimal(base_size = 14)
 
+#Grafico acoso segun hombre mujer general
+tipos_acoso <- c(
+    "AS1_2", "AS2_2", "AS3_2", "AS4_2", "AS5_2", "AS6_2", "AS7_2", "AS8_2"
+  )
+ 
+  etiquetas <- c(
+    "Silbidos con intenciones sexuales",
+    "Piropos",
+    "Pitado desde un vehículo",
+    "Mostrado genitales sin desearlo",
+    "Mensajes sexuales (digital)",
+    "Comentarios sexuales (digital)",
+    "Publicar información sexual (digital)",
+    "Fotografía/video sexual (digital)"
+  )
+  
+  tabla_acoso <- lapply(seq_along(tipos_acoso), function(i) {
+    act %>%
+      count(Quien = get(tipos_acoso[i])) %>%
+      mutate(Tipo = etiquetas[i]) %>%
+      filter(!is.na(Quien))
+  }) %>%
+    bind_rows()
+  
+  
+  tabla_acoso <- tabla_acoso %>%
+    group_by(Tipo) %>%
+    mutate(Porcentaje = 100 * n / sum(n))
+  
+  tabla_acoso$Quien <- factor(tabla_acoso$Quien, levels = c("Mujeres", "Hombres", "Ambos", "NS/NR"))
+  tabla_acoso$Tipo <- factor(tabla_acoso$Tipo, levels = rev(etiquetas))
+  
+  
+  color_pal <- c(
+    "Mujeres" = "#4A90E2", # azul
+    "Hombres" = "#EA8722", # naranja
+    "Ambos" = "#ACACAC",   # gris
+    "NS/NR" = "#FFC90E"    # amarillo
+  )
+  
+  ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
+    geom_bar(stat = "identity", width = 0.7) +
+    coord_flip() +
+    scale_fill_manual(values = color_pal, drop = FALSE) +
+    labs(
+      title = "Persona que realizó el acoso sexual a hombres según tipo de acoso",
+      x = NULL, y = "Porcentaje",
+      fill = NULL
+    ) +
+    theme_minimal(base_size = 13) +
+    theme(
+      legend.position = "bottom",
+      panel.grid.major.y = element_blank(),
+      axis.text.y = element_text(hjust = 1)
+    )
+
+
+
 
 ###Tabla sobre Mensajes----
 
@@ -407,5 +467,6 @@ ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS8_1)) +
     fill = "Respuesta",
   ) +
   theme_minimal(base_size = 14)
+
 
 
