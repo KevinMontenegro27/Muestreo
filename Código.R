@@ -6,10 +6,14 @@ library(survey)
 library(labelled)
 library(janitor)
 library(haven)
-library(tidyr)
+#install.packages("rnaturalearth")
+library(rnaturalearth)
+#library(rnaturalearthdata)
+library(sf)
 library(ggplot2)
 
-##Nueva variable---- 
+
+#Nueva variable---- 
 act$factor= rep(1, 937)
 
 # Recodificación I ---- 
@@ -120,16 +124,22 @@ tabla3 <- svytable(~AS1_1+edad+SD2, disenyo); tabla3
 tablas3<- as.data.frame(tabla3)
 prop_tabla3 <- prop.table(tabla3, margin = c(2, 3))
 prop_tabla3
+
+
 ###Tabla sobre Piropos por edad, divido por sexo----. 
 tabla4 <- svytable(~AS2_1+edad+SD2, disenyo); tabla4
 tablas4<- as.data.frame(tabla4)
 prop_tabla4 <- prop.table(tabla4, margin = c(2, 3))
 prop_tabla4
+
+
 ###Tabla sobre Pitado por edad, divido por sexo----. 
 tabla5 <- svytable(~AS3_1+edad+SD2, disenyo); tabla5
 tablas5<- as.data.frame(tabla5)
 prop_tabla5 <- prop.table(tabla5, margin = c(2, 3))
 prop_tabla5
+
+
 ###Tabla sobre Mostrado genitales sin desearlo por edad, divido por sexo----. 
 tabla6 <- svytable(~AS4_1+edad+SD2, disenyo); tabla6
 tablas6<- as.data.frame(tabla6)
@@ -142,11 +152,16 @@ tabla7 <- svytable(~AS5_1+edad+SD2, disenyo); tabla7
 tablas7<- as.data.frame(tabla7)
 prop_tabla7 <- prop.table(tabla7, margin = c(2, 3))
 prop_tabla7
+
+
+
 ###Tabla sobre comentarios de tipo sexual por edad, divido por sexo----. 
 tabla8 <- svytable(~AS6_1+edad+SD2, disenyo); tabla8
 tablas8<- as.data.frame(tabla8)
 prop_tabla8 <- prop.table(tabla8, margin = c(2, 3))
 prop_tabla8
+
+
 ###Tabla sobre publicar información por edad, divido por sexo----. 
 tabla9 <- svytable(~AS7_1+edad+SD2, disenyo); tabla9
 tablas9<- as.data.frame(tabla9)
@@ -176,6 +191,7 @@ tablas15<- as.data.frame(tabla15)
 ###Tabla de provincia dado sexo----.
 tabla16 <- svytable(~CS13_A+SD2+AS5_1, disenyo); tabla16
 tablas16<- as.data.frame(tabla16)
+
 ###Tabla de provincia dado sexo----.
 tabla17 <- svytable(~CS13_A+SD2+AS6_1, disenyo); tabla17
 tablas17<- as.data.frame(tabla17)
@@ -188,54 +204,6 @@ tablas19<- as.data.frame(tabla19)
 
 
 #Frecuencia del sexo que lo realiza----
-total_casos <- sum(table(act$AS1_2)) + 
-  sum(table(act$AS2_2)) +
-  sum(table(act$AS3_2)) +
-  sum(table(act$AS4_2)) +
-  sum(table(act$AS5_2)) +
-  sum(table(act$AS6_2)) +
-  sum(table(act$AS7_2))
-
-total_casos_hombres <- sum(table(act$AS1_2)[1]) + 
-  sum(table(act$AS2_2)[1]) +
-  sum(table(act$AS3_2)[1]) +
-  sum(table(act$AS4_2)[1]) +
-  sum(table(act$AS5_2)[1]) +
-  sum(table(act$AS6_2)[1]) +
-  sum(table(act$AS7_2)[1])
-
-total_casos_mujeres <- sum(table(act$AS1_2)[2]) + 
-  sum(table(act$AS2_2)[2]) +
-  sum(table(act$AS3_2)[2]) +
-  sum(table(act$AS4_2)[2]) +
-  sum(table(act$AS5_2)[2]) +
-  sum(table(act$AS6_2)[2]) +
-  sum(table(act$AS7_2)[2])
-
-total_casos_ambos <- sum(table(act$AS1_2)[3]) + 
-  sum(table(act$AS2_2)[3]) +
-  sum(table(act$AS3_2)[3]) +
-  sum(table(act$AS4_2)[3]) +
-  sum(table(act$AS5_2)[3]) +
-  sum(table(act$AS6_2)[3]) +
-  sum(table(act$AS7_2)[3])
-
-total_casos_NS <- sum(table(act$AS1_2)[4]) + 
-  sum(table(act$AS2_2)[4]) +
-  sum(table(act$AS3_2)[4]) +
-  sum(table(act$AS4_2)[4]) +
-  sum(table(act$AS5_2)[4]) +
-  sum(table(act$AS6_2)[4]) +
-  sum(table(act$AS7_2)[4])
-
-prop_hombres <- total_casos_hombres / total_casos
-prop_mujeres <-total_casos_mujeres / total_casos
-prop_ambos <-total_casos_ambos / total_casos
-prop_NS <-total_casos_NS / total_casos
-
-tabla20 <- as.data.frame(cbind(prop_hombres, prop_mujeres, prop_ambos, prop_NS))
-names(tabla20) <- c("Hombres", "Mujeres", "Ambos", "NS/NR")
-tabla20
 
 
 #Gráficos ----
@@ -299,7 +267,7 @@ ggplot(mapa) +
        fill = "Casos") +
   theme_minimal()
 
-
+#Gráfico por los tipos de acoso sexual----
 ###Gráfico sobre Chiflado----
 ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS1_1)) +
   geom_col(position = "dodge") +
@@ -312,9 +280,9 @@ ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS1_1)) +
   ) +
   theme_minimal(base_size = 14)
 
-###Tabla sobre piropo ----
+###Gráfico sobre piropo ----
 
-ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS2_1)) +
+ggplot(tablas4, aes(x = SD2, y = Freq, fill = AS2_1)) +
   geom_col(position = "dodge") +
   facet_wrap(~ edad) +
   scale_fill_brewer(palette = "Set2") +
@@ -325,9 +293,9 @@ ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS2_1)) +
   ) +
   theme_minimal(base_size = 14)
 
-###Tabla sobre Pitado   ----
+###Gráfico sobre Pitado   ----
 
-ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS3_1)) +
+ggplot(tablas5, aes(x = SD2, y = Freq, fill = AS3_1)) +
   geom_col(position = "dodge") +
   facet_wrap(~ edad) +
   scale_fill_brewer(palette = "Set2") +
@@ -338,9 +306,9 @@ ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS3_1)) +
   ) +
   theme_minimal(base_size = 14)
 
-###Tabla sobre genitales ----
+###Gráfico sobre genitales ----
 
-ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS4_1)) +
+ggplot(tablas6, aes(x = SD2, y = Freq, fill = AS4_1)) +
   geom_col(position = "dodge") +
   facet_wrap(~ edad) +
   scale_fill_brewer(palette = "Set2") +
@@ -351,148 +319,91 @@ ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS4_1)) +
   ) +
   theme_minimal(base_size = 14)
 
-#Grafico acoso segun hombre mujer general
+
+###Gráfico sobre Mensajes----
+
+ggplot(tablas7, aes(x = SD2, y = Freq, fill = AS5_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Gráfico sobre Comentarios ----
+
+ggplot(tablas8, aes(x = SD2, y = Freq, fill = AS6_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Gráfico sobre publicar infor ----
+
+ggplot(tablas9, aes(x = SD2, y = Freq, fill = AS7_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Gráfico sobre FOtos o videos manupilados ----
+ggplot(tablas10, aes(x = SD2, y = Freq, fill = AS8_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+
+
+###Grafico de Persona que realizó el acoso sexual según tipo de acoso----.
 tipos_acoso <- c(
-    "AS1_2", "AS2_2", "AS3_2", "AS4_2", "AS5_2", "AS6_2", "AS7_2", "AS8_2"
-  )
- 
-  etiquetas <- c(
-    "Silbidos con intenciones sexuales",
-    "Piropos",
-    "Pitado desde un vehículo",
-    "Mostrado genitales sin desearlo",
-    "Mensajes sexuales (digital)",
-    "Comentarios sexuales (digital)",
-    "Publicar información sexual (digital)",
-    "Fotografía/video sexual (digital)"
-  )
-  
-  tabla_acoso <- lapply(seq_along(tipos_acoso), function(i) {
-    act %>%
-      count(Quien = get(tipos_acoso[i])) %>%
-      mutate(Tipo = etiquetas[i]) %>%
-      filter(!is.na(Quien))
-  }) %>%
-    bind_rows()
-  
-  
-  tabla_acoso <- tabla_acoso %>%
-    group_by(Tipo) %>%
-    mutate(Porcentaje = 100 * n / sum(n))
-  
-  tabla_acoso$Quien <- factor(tabla_acoso$Quien, levels = c("Mujeres", "Hombres", "Ambos", "NS/NR"))
-  tabla_acoso$Tipo <- factor(tabla_acoso$Tipo, levels = rev(etiquetas))
-  
-  
-  color_pal <- c(
-    "Mujeres" = "#4A90E2", # azul
-    "Hombres" = "#EA8722", # naranja
-    "Ambos" = "#ACACAC",   # gris
-    "NS/NR" = "#FFC90E"    # amarillo
-  )
-  
-  ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
-    geom_bar(stat = "identity", width = 0.7) +
-    coord_flip() +
-    scale_fill_manual(values = color_pal, drop = FALSE) +
-    labs(
-      title = "Persona que realizó el acoso sexual a hombres según tipo de acoso",
-      x = NULL, y = "Porcentaje",
-      fill = NULL
-    ) +
-    theme_minimal(base_size = 13) +
-    theme(
-      legend.position = "bottom",
-      panel.grid.major.y = element_blank(),
-      axis.text.y = element_text(hjust = 1)
-    )
+  "AS1_2", "AS2_2", "AS3_2", "AS4_2", "AS5_2", "AS6_2", "AS7_2", "AS8_2"
+)
+
+etiquetas <- c(
+  "Silbidos con intenciones sexuales",
+  "Piropos",
+  "Pitado desde un vehículo",
+  "Mostrado genitales sin desearlo",
+  "Mensajes sexuales (digital)",
+  "Comentarios sexuales (digital)",
+  "Publicar información sexual (digital)",
+  "Fotografía/video sexual (digital)"
+)
+
+tabla_acoso <- lapply(seq_along(tipos_acoso), function(i) {
+  act %>%
+    count(Quien = get(tipos_acoso[i])) %>%
+    mutate(Tipo = etiquetas[i]) %>%
+    filter(!is.na(Quien))
+}) %>%
+  bind_rows()
 
 
+tabla_acoso <- tabla_acoso %>%
+  group_by(Tipo) %>%
+  mutate(Porcentaje = 100 * n / sum(n))
 
-
-###Tabla sobre Mensajes----
-
-ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS5_1)) +
-  geom_col(position = "dodge") +
-  facet_wrap(~ edad) +
-  scale_fill_brewer(palette = "Set2") +
-  labs(
-    x = "Sexo",
-    y = "Frecuencia",
-    fill = "Respuesta",
-  ) +
-  theme_minimal(base_size = 14)
-
-###Tabla sobre Comentarios ----
-
-ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS6_1)) +
-  geom_col(position = "dodge") +
-  facet_wrap(~ edad) +
-  scale_fill_brewer(palette = "Set2") +
-  labs(
-    x = "Sexo",
-    y = "Frecuencia",
-    fill = "Respuesta",
-  ) +
-  theme_minimal(base_size = 14)
-
-###Tabla sobre publicar infor ----
-
-ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS7_1)) +
-  geom_col(position = "dodge") +
-  facet_wrap(~ edad) +
-  scale_fill_brewer(palette = "Set2") +
-  labs(
-    x = "Sexo",
-    y = "Frecuencia",
-    fill = "Respuesta",
-  ) +
-  theme_minimal(base_size = 14)
-
-###Tabla sobre FOtos o videos manupilados ----
-
-ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS8_1)) +
-  geom_col(position = "dodge") +
-  facet_wrap(~ edad) +
-  scale_fill_brewer(palette = "Set2") +
-  labs(
-    x = "Sexo",
-    y = "Frecuencia",
-    fill = "Respuesta",
-  ) +
-  theme_minimal(base_size = 14)
-
-### grafico de Persona que realizó el acoso sexual según tipo de acoso----.
-tipos_acoso <- c(
-    "AS1_2", "AS2_2", "AS3_2", "AS4_2", "AS5_2", "AS6_2", "AS7_2", "AS8_2"
-  )
- 
-  etiquetas <- c(
-    "Silbidos con intenciones sexuales",
-    "Piropos",
-    "Pitado desde un vehículo",
-    "Mostrado genitales sin desearlo",
-    "Mensajes sexuales (digital)",
-    "Comentarios sexuales (digital)",
-    "Publicar información sexual (digital)",
-    "Fotografía/video sexual (digital)"
-  )
-  
-  tabla_acoso <- lapply(seq_along(tipos_acoso), function(i) {
-    act %>%
-      count(Quien = get(tipos_acoso[i])) %>%
-      mutate(Tipo = etiquetas[i]) %>%
-      filter(!is.na(Quien))
-  }) %>%
-    bind_rows()
-  
-  
-  tabla_acoso <- tabla_acoso %>%
-    group_by(Tipo) %>%
-    mutate(Porcentaje = 100 * n / sum(n))
-  
-  tabla_acoso$Quien <- factor(tabla_acoso$Quien, levels = c("Mujeres", "Hombres", "Ambos", "NS/NR"))
-  tabla_acoso$Tipo <- factor(tabla_acoso$Tipo, levels = rev(etiquetas))
+tabla_acoso$Quien <- factor(tabla_acoso$Quien, levels = c("Mujeres", "Hombres", "Ambos", "NS/NR"))
+tabla_acoso$Tipo <- factor(tabla_acoso$Tipo, levels = rev(etiquetas))
 
 ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
   geom_bar(stat = "identity", width = 0.7) +
@@ -508,6 +419,7 @@ ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
     panel.grid.major.y = element_blank(),
     axis.text.y = element_text(hjust = 1)
   )
+
 
 
 
