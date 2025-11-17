@@ -451,6 +451,11 @@ ggplot(df_dispersion, aes(x = edad, y = Freq, group = SD2, color = SD2)) +
             hjust = 0.5, vjust = -1, size = 3)
 
 ##grafico
+obtener_proporcion_si_grupo <- function(variable, grupo, disenyo) {
+  # Crea la fórmula para la tabla: ~ variable + grupo
+  formula_tabla <- as.formula(paste("~", variable, "+", grupo))
+  tabla <- svytable(formula_tabla, disenyo)
+
 act <- act %>% mutate(CS2_clean = as.numeric(as.character(CS2))) 
 df_violin <- act %>% 
   filter(!is.na(CS8) & CS8 != "NA")
@@ -521,6 +526,7 @@ ggplot(df_radar_largo, aes(x = Etiqueta, y = Proporcion_Si, group = Grupo)) +
     panel.grid.minor = element_blank(),
     legend.position = "bottom"
   )
+
 
 
 
