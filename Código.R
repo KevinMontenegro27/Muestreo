@@ -468,7 +468,7 @@ ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS8_1)) +
   ) +
   theme_minimal(base_size = 14)
 
-### grafico de Persona que realizó el acoso sexual a hombres según tipo de acoso----.
+### grafico de Persona que realizó el acoso sexual según tipo de acoso----.
 tipos_acoso <- c(
     "AS1_2", "AS2_2", "AS3_2", "AS4_2", "AS5_2", "AS6_2", "AS7_2", "AS8_2"
   )
@@ -514,6 +514,7 @@ ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
     panel.grid.major.y = element_blank(),
     axis.text.y = element_text(hjust = 1)
   )
+
 
 
 
