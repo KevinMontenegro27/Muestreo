@@ -479,6 +479,21 @@ ggplot(df_violin, aes(x = CS8, y = CS2_clean, fill = CS8)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ##grafico 
+df_radar_largo <- bind_rows(lapply(variables_acoso, obtener_proporcion_si_grupo, 
+                                   grupo = "edad", disenyo = disenyo))
+df_radar_largo <- df_radar_largo %>%
+  mutate(
+    Etiqueta = case_when(
+      Acoso == "AS1_1" ~ "1. Chiflado",
+      Acoso == "AS2_1" ~ "2. Piropos",
+      Acoso == "AS3_1" ~ "3. Pitado",
+      Acoso == "AS4_1" ~ "4. Genitales",
+      Acoso == "AS5_1" ~ "5. Mensajes Sex.",
+      Acoso == "AS6_1" ~ "6. Comentarios Sex.",
+      Acoso == "AS7_1" ~ "7. Info Privada",
+      Acoso == "AS8_1" ~ "8. Fotos Manip."
+    )
+  )
 COLOR_VERDE <- "#4CC0B0"
 COLOR_NARANJA <- "#F49E69"
 COLOR_TERCER <- "#FFD700" 
@@ -506,6 +521,7 @@ ggplot(df_radar_largo, aes(x = Etiqueta, y = Proporcion_Si, group = Grupo)) +
     panel.grid.minor = element_blank(),
     legend.position = "bottom"
   )
+
 
 
 
