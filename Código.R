@@ -304,4 +304,108 @@ ggplot(mapa) +
   theme_minimal()
 
 
+###Gráfico sobre Chiflado----
+ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS1_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Tabla sobre piropo ----
+
+ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS2_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Tabla sobre Pitado   ----
+
+ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS3_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Tabla sobre genitales ----
+
+ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS4_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+
+###Tabla sobre Mensajes----
+
+ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS5_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Tabla sobre Comentarios ----
+
+ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS6_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Tabla sobre publicar infor ----
+
+ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS7_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
+###Tabla sobre FOtos o videos manupilados ----
+
+ggplot(tablas3, aes(x = SD2, y = Freq, fill = AS8_1)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ edad) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Sexo",
+    y = "Frecuencia",
+    fill = "Respuesta",
+  ) +
+  theme_minimal(base_size = 14)
+
 
