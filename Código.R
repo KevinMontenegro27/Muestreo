@@ -499,30 +499,22 @@ tipos_acoso <- c(
   
   tabla_acoso$Quien <- factor(tabla_acoso$Quien, levels = c("Mujeres", "Hombres", "Ambos", "NS/NR"))
   tabla_acoso$Tipo <- factor(tabla_acoso$Tipo, levels = rev(etiquetas))
-  
-  
-  color_pal <- c(
-    "Mujeres" = "#4A90E2", # azul
-    "Hombres" = "#EA8722", # naranja
-    "Ambos" = "#ACACAC",   # gris
-    "NS/NR" = "#FFC90E"    # amarillo
+
+ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
+  geom_bar(stat = "identity", width = 0.7) +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set2", drop = FALSE) +
+  labs(
+    title = "Persona que realizó el acoso sexual a hombres según tipo de acoso",
+    x = NULL, y = "Porcentaje",
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_text(hjust = 1)
   )
-  
-  ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
-    geom_bar(stat = "identity", width = 0.7) +
-    coord_flip() +
-    scale_fill_manual(values = color_pal, drop = FALSE) +
-    labs(
-      title = "Persona que realizó el acoso sexual a hombres según tipo de acoso",
-      x = NULL, y = "Porcentaje",
-      fill = NULL
-    ) +
-    theme_minimal(base_size = 13) +
-    theme(
-      legend.position = "bottom",
-      panel.grid.major.y = element_blank(),
-      axis.text.y = element_text(hjust = 1)
-    )
 
 
 
