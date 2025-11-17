@@ -186,9 +186,56 @@ tablas19<- as.data.frame(tabla19)
 
 
 #Frecuencia del sexo que lo realiza----
+total_casos <- sum(table(act$AS1_2)) + 
+  sum(table(act$AS2_2)) +
+  sum(table(act$AS3_2)) +
+  sum(table(act$AS4_2)) +
+  sum(table(act$AS5_2)) +
+  sum(table(act$AS6_2)) +
+  sum(table(act$AS7_2))
 
+total_casos_hombres <- sum(table(act$AS1_2)[1]) + 
+  sum(table(act$AS2_2)[1]) +
+  sum(table(act$AS3_2)[1]) +
+  sum(table(act$AS4_2)[1]) +
+  sum(table(act$AS5_2)[1]) +
+  sum(table(act$AS6_2)[1]) +
+  sum(table(act$AS7_2)[1])
 
+total_casos_mujeres <- sum(table(act$AS1_2)[2]) + 
+  sum(table(act$AS2_2)[2]) +
+  sum(table(act$AS3_2)[2]) +
+  sum(table(act$AS4_2)[2]) +
+  sum(table(act$AS5_2)[2]) +
+  sum(table(act$AS6_2)[2]) +
+  sum(table(act$AS7_2)[2])
+
+total_casos_ambos <- sum(table(act$AS1_2)[3]) + 
+  sum(table(act$AS2_2)[3]) +
+  sum(table(act$AS3_2)[3]) +
+  sum(table(act$AS4_2)[3]) +
+  sum(table(act$AS5_2)[3]) +
+  sum(table(act$AS6_2)[3]) +
+  sum(table(act$AS7_2)[3])
+
+total_casos_NS <- sum(table(act$AS1_2)[4]) + 
+  sum(table(act$AS2_2)[4]) +
+  sum(table(act$AS3_2)[4]) +
+  sum(table(act$AS4_2)[4]) +
+  sum(table(act$AS5_2)[4]) +
+  sum(table(act$AS6_2)[4]) +
+  sum(table(act$AS7_2)[4])
+
+prop_hombres <- total_casos_hombres / total_casos
+prop_mujeres <-total_casos_mujeres / total_casos
+prop_ambos <-total_casos_ambos / total_casos
+prop_NS <-total_casos_NS / total_casos
+
+tabla20 <- as.data.frame(cbind(prop_hombres, prop_mujeres, prop_ambos, prop_NS))
+names(tabla20) <- c("Hombres", "Mujeres", "Ambos", "NS/NR")
+tabla20
 
 
 #Gráficos ----
+
 
