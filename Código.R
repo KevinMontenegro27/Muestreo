@@ -420,6 +420,93 @@ ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
     axis.text.y = element_text(hjust = 1)
   )
 
+##grafico
+library(dplyr)
+library(ggplot2)
+library(scales) 
+
+COLOR_VERDE <- "#4CC0B0" 
+COLOR_NARANJA <- "#F49E69"
+
+tabla7 <- svytable(~AS5_1+edad+SD2, disenyo)
+
+df_dispersion <- as.data.frame(prop.table(tabla7, margin = c(2, 3))) %>%
+  filter(grepl("^[Ss][Íi]$", AS5_1)) 
+
+ggplot(df_dispersion, aes(x = edad, y = Freq, group = SD2, color = SD2)) +
+  geom_point(size = 4, alpha = 0.9) +
+  geom_line(linewidth = 1) +
+  
+  scale_color_manual(values = c("Hombre" = COLOR_VERDE, "Mujer" = COLOR_NARANJA)) + 
+  
+  labs(
+    title = "",
+    x = "Grupo de Edad",
+    y = "Proporción de Personas Afectadas",
+    color = "Sexo"
+  ) +
+  theme_bw() +
+  scale_y_continuous(labels = scales::percent) +
+  geom_text(aes(label = scales::percent(Freq, accuracy = 0.1)), 
+            hjust = 0.5, vjust = -1, size = 3)
+
+##grafico
+act <- act %>% mutate(CS2_clean = as.numeric(as.character(CS2))) 
+df_violin <- act %>% 
+  filter(!is.na(CS8) & CS8 != "NA")
+
+
+ggplot(df_violin, aes(x = CS8, y = CS2_clean, fill = CS8)) +
+  geom_violin(trim = TRUE, alpha = 0.7) + 
+  geom_boxplot(width = 0.1, fill = "white") + 
+  
+  
+  scale_fill_manual(values = c("Soltero" = COLOR_VERDE, 
+                               "Unión Libre" = COLOR_NARANJA,
+                               "Casado/a" = "#2B685F", 
+                               "Separado/a" = "#F28448", #
+                               
+                               "Divorciado/a" = COLOR_VERDE,
+                               "Viudo/a" = COLOR_NARANJA)) +
+  
+  labs(
+    title = "Distribución de Edad por Estado Conyugal",
+    x = "Estado Conyugal (CS8)",
+    y = "Edad (Años)",
+    fill = "Estado Conyugal"
+  ) +
+  theme_light() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+##grafico 
+COLOR_VERDE <- "#4CC0B0"
+COLOR_NARANJA <- "#F49E69"
+COLOR_TERCER <- "#FFD700" 
+
+ggplot(df_radar_largo, aes(x = Etiqueta, y = Proporcion_Si, group = Grupo)) +
+  
+  geom_point(aes(color = Grupo), size = 5) + 
+  
+  scale_color_manual(values = c("18a34" = COLOR_NARANJA, 
+                                "35a49" = COLOR_VERDE, 
+                                "50+" = "red")) +
+  
+  coord_polar(start = 0) + 
+  labs(
+    title = "",
+    subtitle = "La distancia del punto al centro indica la proporción de acoso.",
+    x = NULL,
+    y = NULL
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 10, face = "bold"),
+    axis.text.y = element_blank(),
+    panel.grid.major = element_line(color = "gray80", linewidth = 0.5), 
+    panel.grid.minor = element_blank(),
+    legend.position = "bottom"
+  )
+
 
 
 
