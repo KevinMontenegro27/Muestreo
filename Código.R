@@ -258,23 +258,17 @@ todas <- bind_rows(
 
 todas_limpio <- todas %>%
   filter(Freq > 0) %>% 
-  filter(`SÍ` %in% c("SÍ","Sí","si","SI") | grepl("SÍ", AS1_1) |
-           grepl("SÍ", AS2_1) | grepl("SÍ", AS3_1) |
-           grepl("SÍ", AS4_1) | grepl("SÍ", AS5_1) |
-           grepl("SÍ", AS6_1) | grepl("SÍ", AS7_1) |
-           grepl("SÍ", AS8_1))
+  filter(
+    if_any(starts_with("AS"), ~ .x == "SÍ")
+  )
+
 
 todas_limpio <- todas %>%
+  filter(Freq > 0) %>% 
   filter(
-    (AS1_1 == "SÍ") |
-      (AS2_1 == "SÍ") |
-      (AS3_1 == "SÍ") |
-      (AS4_1 == "SÍ") |
-      (AS5_1 == "SÍ") |
-      (AS6_1 == "SÍ") |
-      (AS7_1 == "SÍ") |
-      (AS8_1 == "SÍ")
+    if_any(starts_with("AS"), ~ grepl("S[IÍ]", .x, ignore.case = TRUE))
   )
+
 
 t_sexo <- todas_limpio %>%
   group_by(CS13_A, SD2) %>% 
@@ -514,6 +508,7 @@ ggplot(tabla_acoso, aes(x = Tipo, y = Porcentaje, fill = Quien)) +
     panel.grid.major.y = element_blank(),
     axis.text.y = element_text(hjust = 1)
   )
+
 
 
 
