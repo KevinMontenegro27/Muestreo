@@ -237,5 +237,71 @@ tabla20
 
 
 #Gráficos ----
+##Mapa----
+library(dplyr)
+
+tablas12$tipo_acoso <- "Chiflados"
+tablas13$tipo_acoso <- "Piropos"
+tablas14$tipo_acoso <- "Pitado"
+tablas15$tipo_acoso <- "Mostrar genitales"
+tablas16$tipo_acoso <- "Acoso5"
+tablas17$tipo_acoso <- "Acoso6"
+tablas18$tipo_acoso <- "Acoso7"
+tablas19$tipo_acoso <- "Acoso8"
+
+todas <- bind_rows(
+  tablas12, tablas13, tablas14, tablas15,
+  tablas16, tablas17, tablas18, tablas19
+)
+
+todas_limpio <- todas %>%
+  filter(Freq > 0) %>% 
+  filter(`SÍ` %in% c("SÍ","Sí","si","SI") | grepl("SÍ", AS1_1) |
+           grepl("SÍ", AS2_1) | grepl("SÍ", AS3_1) |
+           grepl("SÍ", AS4_1) | grepl("SÍ", AS5_1) |
+           grepl("SÍ", AS6_1) | grepl("SÍ", AS7_1) |
+           grepl("SÍ", AS8_1))
+
+todas_limpio <- todas %>%
+  filter(
+    (AS1_1 == "SÍ") |
+      (AS2_1 == "SÍ") |
+      (AS3_1 == "SÍ") |
+      (AS4_1 == "SÍ") |
+      (AS5_1 == "SÍ") |
+      (AS6_1 == "SÍ") |
+      (AS7_1 == "SÍ") |
+      (AS8_1 == "SÍ")
+  )
+
+t_sexo <- todas_limpio %>%
+  group_by(CS13_A, SD2) %>% 
+  summarise(total = sum(Freq), .groups = "drop")
+
+
+cr <- ne_states(country = "Costa Rica", returnclass = "sf")
+t_sexo <- t_sexo %>%
+  mutate(CS13_A = case_when(
+    CS13_A == "Limon" ~ "Limón",
+    CS13_A == "San Jose" ~ "San José",
+    TRUE ~ CS13_A
+  ))
+
+
+
+mapa <- cr %>%
+  left_join(t_sexo, by = c("name" = "CS13_A"))
+
+
+library(ggplot2)
+
+ggplot(mapa) +
+  geom_sf(aes(fill = total)) +
+  scale_fill_viridis_c(option = "turbo") +
+  facet_wrap(~ SD2) +
+  labs(title = "Casos de acoso por provincia y sexo",
+       fill = "Casos") +
+  theme_minimal()
+
 
 
