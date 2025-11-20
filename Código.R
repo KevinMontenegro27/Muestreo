@@ -529,6 +529,102 @@ ggplot(df_radar_largo, aes(x = Etiqueta, y = Proporcion_Si, group = Grupo)) +
     legend.position = "bottom"
   )
 
+  tabla_acoso1 <- tabla_acoso %>%
+    mutate(Quien = case_when(
+      Quien %in% c("Mujeres", "Hombres", "Ambos", "NS/NR") ~ "Reportaron acoso",
+      TRUE ~ as.character(Quien)
+    )) %>%
+    group_by(Tipo, Quien) %>%
+    summarise(n = sum(n), .groups = "drop") %>%
+    group_by(Tipo) %>%
+    mutate(Porcentaje = 100 * n / 937)
+  
+#Esto es para edad
+
+  act_long <- act %>%
+    select(all_of(c(tipos_acoso, "edad"))) %>%
+    pivot_longer(cols = all_of(tipos_acoso), names_to = "Tipo_Acoso", values_to = "Respuesta") %>%
+    filter(!is.na(Respuesta)) # eliminar NA si deseas
+  
+
+  act_long <- act_long %>%
+    mutate(
+      Tipo_Acoso = factor(Tipo_Acoso, levels = tipos_acoso, labels = etiquetas),
+      Acoso = "Sí"  # Ya que si respondieron se asume hubo acoso
+    )
+  
+  # Calcular porcentaje de acoso por tipo y edad
+  tabla_porcentaje_edad <- act_long %>%
+    group_by(Tipo_Acoso, edad) %>%
+    summarise(
+      n_acoso = n(),
+      total = n(),  # si quieres, puedes reemplazar con total de esa edad para porcentaje poblacional
+      porcentaje = 100 * n_acoso / 937,
+      .groups = "drop"
+    )
+  
+  print(tabla_porcentaje_edad)
+  
+ 
+
+ act_long <- act %>%
+   select(all_of(c(tipos_acoso, "edu"))) %>%
+   pivot_longer(cols = all_of(tipos_acoso), names_to = "Tipo_Acoso", values_to = "Respuesta") %>%
+   filter(!is.na(Respuesta))  
+ 
+ act_long <- act_long %>%
+   mutate(
+     Tipo_Acoso = factor(Tipo_Acoso, levels = tipos_acoso, labels = etiquetas),
+     Acoso = "Sí" 
+   )
+
+ tabla_porcentaje_edu <- act_long %>%
+   group_by(Tipo_Acoso, edu) %>%
+   summarise(n_acoso = n(),
+             total = n(),
+             porcentaje = 100 * n_acoso / length(act),
+             .groups = "drop")
+ 
+
+ tabla_porcentaje_edu<-tabla_porcentaje_edu
+ print(tabla_porcentaje_edu)
+ 
+ 
+ total <- sum(tabla_porcentaje_edu$n_acoso, na.rm = TRUE)
+print(total) 
+
+#Esto es para sexo
+
+
+act_long_sexo <- act %>%
+  select(all_of(c(tipos_acoso, "SD2"))) %>%
+  pivot_longer(cols = all_of(tipos_acoso), names_to = "Tipo_Acoso", values_to = "Respuesta") %>%
+  filter(!is.na(Respuesta))
+
+
+act_long_sexo <- act_long_sexo %>%
+  mutate(
+    Tipo_Acoso = factor(Tipo_Acoso, levels = tipos_acoso, labels = etiquetas),
+    Sexo = case_when(
+      SD2 == "M" ~ "Hombre",
+      SD2 == "F" ~ "Mujer",
+      TRUE ~ as.character(SD2)
+    ),
+    Acoso = "Sí"  
+  )
+
+tabla_porcentaje_sexo <- act_long_sexo %>%
+  group_by(Tipo_Acoso, Sexo) %>%
+  summarise(
+    n_acoso = n(),
+    total = n(),
+    porcentaje = 100 * n_acoso / length(act),
+    .groups = "drop"
+  )
+
+print(tabla_porcentaje_sexo)
+
+
 
 
 
