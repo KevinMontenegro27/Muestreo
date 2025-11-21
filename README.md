@@ -7,4 +7,7 @@
 | Mensajes sexuales (digital)                 | AS5_1          | AS5_2          |
 | Comentarios sexuales (digital)              | AS6_1          | AS6_2          |
 | Publicar información sexual (digital)       | AS7_1          | AS7_2          |
-| 
+| edad                                        | edad           | --------       |
+| Sexo                                        | sexo           | -----          |
+| Educacion                                   | edu            | ----           |
+
