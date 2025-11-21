@@ -566,6 +566,21 @@ ggplot(df_radar_largo, aes(x = Etiqueta, y = Proporcion_Si, group = Grupo)) +
   print(tabla_porcentaje_edad)
   
  
+#######
+  tipos_acoso <- c(
+  "AS1_2", "AS2_2", "AS3_2", "AS4_2", "AS5_2", "AS6_2", "AS7_2", "AS8_2"
+)
+
+etiquetas <- c(
+  "Silbidos con intenciones sexuales",
+  "Piropos",
+  "Pitado desde un vehículo",
+  "Mostrado genitales sin desearlo",
+  "Mensajes sexuales (digital)",
+  "Comentarios sexuales (digital)",
+  "Publicar información sexual (digital)",
+  "Fotografía/video sexual (digital)"
+)
 
  act_long <- act %>%
    select(all_of(c(tipos_acoso, "edu"))) %>%
@@ -623,6 +638,7 @@ tabla_porcentaje_sexo <- act_long_sexo %>%
   )
 
 print(tabla_porcentaje_sexo)
+
 
 
 
