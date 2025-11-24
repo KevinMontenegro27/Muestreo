@@ -635,6 +635,140 @@ tabla_porcentaje_sexo <- act_long_sexo %>%
 
 print(tabla_porcentaje_sexo)
 
+Nuevas tablas:
+  #Totla acosos por sexo
+act <- act %>%
+  mutate(
+    recibio_acoso = if_else(
+      rowSums(select(., all_of(tipos_acoso)) == 1, na.rm = TRUE) > 0,
+      1, 0
+    )
+  )
+acoso_sexo <- act %>%
+  group_by(SD2) %>%   
+  summarise(
+    n_acoso = sum(recibio_acoso, na.rm = TRUE),
+    porcentaje = 100 * n_acoso / 937
+  ) %>%
+  ungroup()
+
+acoso_total <- act %>%
+  summarise(
+    SD2 = "Total",
+    n_acoso = sum(recibio_acoso, na.rm = TRUE),
+    porcentaje = 100 * n_acoso / 937
+  )
+
+tabla_final <- bind_rows(acoso_sexo, acoso_total)
+
+print(tabla_final)
+
+#Acoso callejero
+
+summary(act[ , tipos_acoso])
+total_hombres <- sum(act$SD2 == "Hombre", na.rm = TRUE)
+total_mujeres <- sum(act$SD2 == "Mujer", na.rm = TRUE)
+total_general  <- total_hombres + total_mujeres
+
+tipos_acoso1 <- c("AS1_2","AS2_2","AS3_2","AS4_2")
+
+act <- act %>%
+  mutate(
+    recibio_acoso = if_else(
+      rowSums(!is.na(select(., all_of(tipos_acoso1)))) > 0, 1, 0))
+
+acoso_sexo <- act %>%
+  group_by(SD2) %>%   # SD2 = Hombre/Mujer
+  summarise(
+    total = n(),
+    n_acoso = sum(recibio_acoso, na.rm = TRUE),
+    porcentaje = 100 * n_acoso / total,
+    .groups = "drop"
+  )
+
+fila_total <- tibble(
+  SD2 = "Total",
+  n_acoso = sum(act$recibio_acoso, na.rm = TRUE),
+  total = total_general,
+  porcentaje = 100 * n_acoso / total_general
+)
+
+tabla_final1 <- bind_rows(
+  fila_total,
+  acoso_sexo
+)
+
+####tabla segun tipo
+
+
+dicc_tipos <- c(
+  AS1_2 = "Silbido",
+  AS2_2 = "Piropo",
+  AS3_2 = "Pitado desde un Vehículo",
+  AS4_2 = "Mostrado genitales sin desearlo"
+)
+
+tipos_acoso1 <- c("AS1_2","AS2_2","AS3_2","AS4_2")
+
+total_general <- nrow(act)
+total_hombres <- sum(act$SD2 == "Hombre", na.rm = TRUE)
+total_mujeres <- sum(act$SD2 == "Mujer", na.rm = TRUE)
+
+act_long <- act %>%
+  pivot_longer(
+    cols = all_of(tipos_acoso1),
+    names_to = "Tipo_Acoso",
+    values_to = "Respuesta"
+  ) %>%
+  mutate(
+    Tipo_Acoso = recode(Tipo_Acoso, !!!dicc_tipos),
+    Acoso = if_else(!is.na(Respuesta), 1, 0)
+  )
+
+# Tabla por sexo y tipo de acoso
+tabla_sexo <- act_long %>%
+  group_by(Tipo_Acoso, SD2) %>%   
+  summarise(
+    n_acoso = sum(Acoso),
+    total = if_else(SD2 == "Hombre", total_hombres, total_mujeres),
+    porcentaje = 100 * n_acoso / total,
+    .groups = "drop"
+  )
+
+# Totales por tipo de acoso
+tabla_total <- act_long %>%
+  group_by(Tipo_Acoso) %>%
+  summarise(
+    n_acoso = sum(Acoso),
+    total = total_general,
+    porcentaje = 100 * n_acoso / total_general
+  ) %>%
+  mutate(SD2 = "Total")
+
+# Unir todo
+tabla_finala <- bind_rows(tabla_total, tabla_sexo) %>%
+  arrange(Tipo_Acoso, SD2)
+print(tabla_finala)
+#print(tabla_finala);names(tabla_finala)
+
+tabla_finala <- tabla_finala |> distinct()
+#print(tabla_finala)
+tabla_wide <- tabla_finala |>
+  pivot_wider(
+    names_from = SD2,        # Las nuevas columnas: Hombre, Mujer, Total
+    values_from = c(n_acoso, total, porcentaje)  # Qué valores se reparten en esas columnas
+  )
+
+print(tabla_wide)
+
+nueva_tabla <- tabla_wide |> 
+  select(Tipo_Acoso, porcentaje_Mujer, porcentaje_Hombre)
+
+nueva_tabla <- nueva_tabla |> slice(c(4,2,3,1))
+
+print(nueva_tabla)#En enviroment esta con decimales 
+
+
 
 
 
