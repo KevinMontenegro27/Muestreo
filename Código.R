@@ -6,10 +6,6 @@ library(survey)
 library(labelled)
 library(janitor)
 library(haven)
-#install.packages("rnaturalearth")
-library(rnaturalearth)
-#library(rnaturalearthdata)
-library(sf)
 library(ggplot2)
 
 
@@ -638,6 +634,7 @@ tabla_porcentaje_sexo <- act_long_sexo %>%
   )
 
 print(tabla_porcentaje_sexo)
+
 
 
 
